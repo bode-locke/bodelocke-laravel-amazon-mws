@@ -1,0 +1,42 @@
+{
+    "name": "laravelamazonmws/laravelamazonmws",
+    "description": ":description",
+    "license": "license",
+    "authors": [
+        {
+            "name": "BodeLocke",
+            "email": "b.delaloi@gmail.com",
+            "homepage": "author homepage"
+        }
+    ],
+    "homepage": "https://github.com/laravelamazonmws/laravelamazonmws",
+    "keywords": ["Laravel", "LaravelAmazonMws"],
+    "require": {
+        "illuminate/support": "~5",
+        "spatie/array-to-xml": "^2.7"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~6.0",
+        "orchestra/testbench": "~3.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "LaravelAmazonMws\\LaravelAmazonMws\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "LaravelAmazonMws\\LaravelAmazonMws\\Tests\\": "tests"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "LaravelAmazonMws\\LaravelAmazonMws\\LaravelAmazonMwsServiceProvider"
+            ],
+            "aliases": {
+                "LaravelAmazonMws": "LaravelAmazonMws\\LaravelAmazonMws\\Facades\\LaravelAmazonMws"
+            }
+        }
+    }
+}
