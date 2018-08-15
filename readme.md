@@ -5,7 +5,14 @@
 [![Build Status][ico-travis]][link-travis]
 [![StyleCI][ico-styleci]][link-styleci]
 
-This is where your description should go. Take a look at [contributing.md](contributing.md) to see a to do list.
+A Laravel package to connect to Amazon's Merchant Web Services (MWS).
+
+Currently optimizing.
+
+This is NOT for Amazon Web Services (AWS) - Cloud Computing Services.
+
+Please, take a look to Amazon Web Services (AWS) documentation :
+https://docs.developer.amazonservices.com/en_FR/dev_guide/DG_IfNew.html
 
 ## Installation
 
