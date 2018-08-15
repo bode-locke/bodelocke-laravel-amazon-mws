@@ -24,7 +24,19 @@ Please see the [changelog](changelog.md) for more information on what has change
 ## Testing
 
 ``` bash
-$ composer test
+$config   = [
+              'Marketplace_Id'    => 'A13V1IB3VIYZZH',
+              'Marketplace_Host'  => 'mws-eu.amazonservices.com',
+              'Seller_Id'         => 'YOUR_SELLER_ID',
+              'Access_Key_ID'     => 'YOUR_ACCESS_KEY_ID',
+              'Secret_Access_Key' => 'YOUR_SECRET_ACCESS_KEY',
+            ];
+$action   = 'GetFulfillmentOrder';
+$query    = [
+              'SellerFulfillmentOrderId' => 895,
+            ];
+$new_mws  = new LaravelAmazonMws($config);
+$response = $new_mws->connect($action, $query);
 ```
 
 ## Contributing
