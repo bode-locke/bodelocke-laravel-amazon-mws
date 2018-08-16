@@ -24,27 +24,27 @@ $ composer require laravelamazonmws/laravelamazonmws
 
 ## Usage
 
-## Change log
-
-Please see the [changelog](changelog.md) for more information on what has changed recently.
-
-## Testing
-
 ``` bash
+$country  = 'FR';
 $config   = [
-              'Marketplace_Id'    => 'A13V1IB3VIYZZH',
-              'Marketplace_Host'  => 'mws-eu.amazonservices.com',
-              'Seller_Id'         => 'YOUR_SELLER_ID',
-              'Access_Key_ID'     => 'YOUR_ACCESS_KEY_ID',
-              'Secret_Access_Key' => 'YOUR_SECRET_ACCESS_KEY',
+                'Marketplace_Id'    => LaravelAmazonMws::getMarketPlaceId($country),
+                'Marketplace_Host'  => LaravelAmazonMws::getMarketPlaceHost($country),
+                'Seller_Id'         => env('YOUR_SELLER_ID'),
+                'Access_Key_ID'     => env('YOUR_ACCESS_KEY_ID'),
+                'Secret_Access_Key' => env('YOUR_SECRET_ACCESS_KEY'),
             ];
 $action   = 'GetFulfillmentOrder';
 $query    = [
-              'SellerFulfillmentOrderId' => 895,
+                //Add the request paramaters by Action, take a look on Amazon documentation
+                'SellerFulfillmentOrderId' => 895,
             ];
-$new_mws  = new LaravelAmazonMws($config);
+$new_mws  =  new LaravelAmazonMws($config);
 $response = $new_mws->connect($action, $query);
 ```
+
+## Change log
+
+Please see the [changelog](changelog.md) for more information on what has changed recently.
 
 ## Contributing
 
