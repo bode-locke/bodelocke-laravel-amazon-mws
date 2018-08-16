@@ -14,6 +14,8 @@ The connect function will provide you a data array expected by the MWS's action 
 Please, take a look to Amazon Web Services (AWS) documentation :
 https://docs.developer.amazonservices.com/en_FR/dev_guide/DG_IfNew.html
 
+This package use the package ArrayToXMl from spatie : https://github.com/spatie/array-to-xml
+
 ## Installation
 
 Via Composer
