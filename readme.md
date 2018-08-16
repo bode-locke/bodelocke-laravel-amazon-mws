@@ -5,7 +5,14 @@
 [![Build Status][ico-travis]][link-travis]
 [![StyleCI][ico-styleci]][link-styleci]
 
-This is where your description should go. Take a look at [contributing.md](contributing.md) to see a to do list.
+A Laravel package to connect to Amazon's Merchant Web Services (MWS).
+
+Currently optimizing.
+
+This is NOT for Amazon Web Services (AWS) - Cloud Computing Services.
+
+Please, take a look to Amazon Web Services (AWS) documentation :
+https://docs.developer.amazonservices.com/en_FR/dev_guide/DG_IfNew.html
 
 ## Installation
 
@@ -17,15 +24,27 @@ $ composer require laravelamazonmws/laravelamazonmws
 
 ## Usage
 
+``` bash
+$country  = 'FR';
+$config   = [
+                'Marketplace_Id'    => LaravelAmazonMws::getMarketPlaceId($country),
+                'Marketplace_Host'  => LaravelAmazonMws::getMarketPlaceHost($country),
+                'Seller_Id'         => env('YOUR_SELLER_ID'),
+                'Access_Key_ID'     => env('YOUR_ACCESS_KEY_ID'),
+                'Secret_Access_Key' => env('YOUR_SECRET_ACCESS_KEY'),
+            ];
+$action   = 'GetFulfillmentOrder';
+$query    = [
+                //Add the request paramaters by Action, take a look on Amazon documentation
+                'SellerFulfillmentOrderId' => 895,
+            ];
+$new_mws  =  new LaravelAmazonMws($config);
+$response = $new_mws->connect($action, $query);
+```
+
 ## Change log
 
 Please see the [changelog](changelog.md) for more information on what has changed recently.
-
-## Testing
-
-``` bash
-$ composer test
-```
 
 ## Contributing
 
