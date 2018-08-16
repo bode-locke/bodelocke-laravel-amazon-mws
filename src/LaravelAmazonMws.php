@@ -30,22 +30,41 @@ class LaravelAmazonMws //TODO Commenter et typer les fonctions
         $query['Signature'] = $this->getSignature($this->config, $method ,$query, $endpoint);
         $request_options    = $this->getRequestOptions($md5_base64, $query, $method == 'POST' ? $body : null);
         $client             = $this->getClient($this->config, $endpoint);
+
         try{
             $request = $client->get(
                 'https://'. $this->config['Marketplace_Host'] . $endpoint,
                 $request_options
             );
-            $response_xml        = $request->getBody()->getContents();
-            $response_xml_object = collect(simplexml_load_string($response_xml))->toArray();
-            $response_array      = json_decode( json_encode($response_xml_object) , 1);
-            return $response_array ;
+
+            return $this->getResponseArray($request->getBody()->getContents()) ;
 
         }catch (\GuzzleHttp\Exception\ClientException $e){
-            //TODO retourner l'erreur correctement
-            return $e->getResponse()->getBody()->getContents();
+
+            $error = $this->getResponseArray($e->getResponse()->getBody()->getContents());
+            return $error["Error"]["Message"] ;
         }
     }
 
+    public static function getMarketPlaceId($country)
+    {
+        return config('laravelamazonmws.markets_places.' . $country . '.id');
+    }
+
+    public static function getMarketPlaceHost($country)
+    {
+        return config('laravelamazonmws.markets_places.' . $country . '.host');
+    }
+
+    private function getMethod($action)
+    {
+        return config('laravelamazonmws.actions.' . $action . '.method');
+    }
+
+    private function getEndpoint($action)
+    {
+        return config('laravelamazonmws.actions.' . $action . '.endpoint');
+    }
 
     private function getDatasToMerge($config, $action)
     {
@@ -59,16 +78,6 @@ class LaravelAmazonMws //TODO Commenter et typer les fonctions
             'SignatureVersion' => '2',
             'Version'          => '2010-10-01',
         ];
-    }
-
-    private function getMethod($action)
-    {
-        return config('laravelamazonmws.actions.' . $action . '.method');
-    }
-
-    private function getEndpoint($action)
-    {
-        return config('laravelamazonmws.actions.' . $action . '.endpoint');
     }
 
     private function getSignature($config, $action, $query, $endpoint)
@@ -111,5 +120,11 @@ class LaravelAmazonMws //TODO Commenter et typer les fonctions
                     'timeout'         => 0,
                     'allow_redirects' => false,
                 ]);
+    }
+
+    private function getResponseArray($response_xml)
+    {
+        $response_xml_object = collect(simplexml_load_string($response_xml))->toArray();
+        return json_decode( json_encode($response_xml_object) , 1);
     }
 }
