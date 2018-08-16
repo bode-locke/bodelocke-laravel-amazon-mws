@@ -7,9 +7,9 @@
 
 A Laravel package to connect to Amazon's Merchant Web Services (MWS).
 
-Currently optimizing.
+Currently optimizing and testing with all MWS's actions.
 
-This is NOT for Amazon Web Services (AWS) - Cloud Computing Services.
+The connect function will provide you a data array expected by the MWS's action passed as paramater.
 
 Please, take a look to Amazon Web Services (AWS) documentation :
 https://docs.developer.amazonservices.com/en_FR/dev_guide/DG_IfNew.html
@@ -38,7 +38,7 @@ $query    = [
                 //Add the request paramaters by Action, take a look on Amazon documentation
                 'SellerFulfillmentOrderId' => 895,
             ];
-$new_mws  =  new LaravelAmazonMws($config);
+$new_mws  = new LaravelAmazonMws($config);
 $response = $new_mws->connect($action, $query);
 ```
 
