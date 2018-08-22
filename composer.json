@@ -1,12 +1,12 @@
 {
     "name": "laravelamazonmws/laravelamazonmws",
     "description": ":description",
-    "license": "license",
+    "license": "MIT",
     "authors": [
         {
             "name": "BodeLocke",
             "email": "b.delaloi@gmail.com",
-            "homepage": "author homepage"
+            "homepage": "https://github.com/BodeLocke"
         }
     ],
     "homepage": "https://github.com/laravelamazonmws/laravelamazonmws",
