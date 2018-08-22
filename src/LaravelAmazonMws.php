@@ -1,20 +1,14 @@
 <?php
-
 namespace LaravelAmazonMws\LaravelAmazonMws;
-
 use Carbon\Carbon;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use LaravelAmazonMws\LaravelAmazonMws\ArrayToXml;
-
-
 class LaravelAmazonMws //TODO Commenter et typer les fonctions
 {
-
     public function __construct($config)
     {
         $this->config = $config;
-
     }
     public function connect($action, $query)
     {
@@ -30,42 +24,33 @@ class LaravelAmazonMws //TODO Commenter et typer les fonctions
         $query['Signature'] = $this->getSignature($this->config, $method ,$query, $endpoint);
         $request_options    = $this->getRequestOptions($md5_base64, $query, $method == 'POST' ? $body : null);
         $client             = $this->getClient($this->config, $endpoint);
-
         try{
             $request = $client->get(
                 'https://'. $this->config['Marketplace_Host'] . $endpoint,
                 $request_options
             );
-
             return $this->getResponseArray($request->getBody()->getContents()) ;
-
         }catch (\GuzzleHttp\Exception\ClientException $e){
-
             $error = $this->getResponseArray($e->getResponse()->getBody()->getContents());
             return $error["Error"]["Message"] ;
         }
     }
-
     public static function getMarketPlaceId($country)
     {
         return config('laravelamazonmws.markets_places.' . $country . '.id');
     }
-
     public static function getMarketPlaceHost($country)
     {
         return config('laravelamazonmws.markets_places.' . $country . '.host');
     }
-
     private function getMethod($action)
     {
         return config('laravelamazonmws.actions.' . $action . '.method');
     }
-
     private function getEndpoint($action)
     {
         return config('laravelamazonmws.actions.' . $action . '.endpoint');
     }
-
     private function getDatasToMerge($config, $action)
     {
         return
@@ -79,7 +64,6 @@ class LaravelAmazonMws //TODO Commenter et typer les fonctions
             'Version'          => '2010-10-01',
         ];
     }
-
     private function getSignature($config, $action, $query, $endpoint)
     {
         return  base64_encode(
@@ -97,7 +81,6 @@ class LaravelAmazonMws //TODO Commenter et typer les fonctions
                     )
                 );
     }
-
     private function getRequestOptions($md5_base64, $query, $body = null)
     {
         return
@@ -111,7 +94,6 @@ class LaravelAmazonMws //TODO Commenter et typer les fonctions
             'query'  => $query
         ];
     }
-
     private function getClient($config, $endpoint)
     {
         return new Client(
@@ -121,10 +103,24 @@ class LaravelAmazonMws //TODO Commenter et typer les fonctions
                     'allow_redirects' => false,
                 ]);
     }
-
     private function getResponseArray($response_xml)
     {
         $response_xml_object = collect(simplexml_load_string($response_xml))->toArray();
         return json_decode( json_encode($response_xml_object) , 1);
+    }
+
+    public static function getTrackingLink($response)
+    {
+        $carrier         = $response["GetPackageTrackingDetailsResult"]["CarrierCode"];
+        $tracking_number = $response['GetPackageTrackingDetailsResult']['TrackingNumber'];
+        $tracking_link   = config('laravelamazonmws.tracking_links.' . $carrier);
+        /*
+        switch ($case) {
+            case 'La Poste':
+                $tracking_link =  "https://www.laposte.fr/particulier/outils/suivre-vos-envois";
+                break;
+        }
+        */
+        return $tracking_link;
     }
 }
