@@ -1,4 +1,4 @@
-<?php
+c<?php
 namespace LaravelAmazonMws\LaravelAmazonMws;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
@@ -35,12 +35,23 @@ class LaravelAmazonMws //TODO Commenter et typer les fonctions
             return $error["Error"]["Message"] ;
         }
     }
-    public static function getMarketPlaceId($country)
+    public static function getMarketPlaceId($country, $country_fallback)
     {
-        return config('laravelamazonmws.markets_places.' . $country . '.id');
+        $markets_places = config('laravelamazonmws.markets_places');
+        if(isset($markets_places[$country])){
+            return config('laravelamazonmws.markets_places.' . $country . '.id');
+        }else{
+            return config('laravelamazonmws.markets_places.' . $country_fallback . '.id');
+        } 
     }
-    public static function getMarketPlaceHost($country)
+    public static function getMarketPlaceHost($country, $country_fallback)
     {
+        $markets_places = config('laravelamazonmws.markets_places');
+        if(isset($markets_places[$country])){
+            return config('laravelamazonmws.markets_places.' . $country . '.host');
+        }else{
+            return config('laravelamazonmws.markets_places.' . $country_fallback . '.host');
+        } 
         return config('laravelamazonmws.markets_places.' . $country . '.host');
     }
     private function getMethod($action)
