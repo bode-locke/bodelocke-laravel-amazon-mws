@@ -1,4 +1,4 @@
-c<?php
+<?php
 namespace LaravelAmazonMws\LaravelAmazonMws;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
