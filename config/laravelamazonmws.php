@@ -60,7 +60,7 @@ return [
         ],
         'CreateFulfillmentOrder' => [
             'endpoint' => '/FulfillmentOutboundShipment/2010-10-01/',
-            'method'   => 'POST',
+            'method'   => 'GET',
         ],
         //MERCHANT FULFILLMENT - VERSION 2010-10-01
         //ORDERS - VERSION 2013-09-01
