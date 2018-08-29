@@ -32,7 +32,7 @@ class LaravelAmazonMws //TODO Commenter et typer les fonctions
             return $this->getResponseArray($request->getBody()->getContents()) ;
         }catch (\GuzzleHttp\Exception\ClientException $e){
             $error = $this->getResponseArray($e->getResponse()->getBody()->getContents());
-            return $error["Error"]["Message"] ;
+            return $error;
         }
     }
     public static function getMarketPlaceId($country, $country_fallback)
